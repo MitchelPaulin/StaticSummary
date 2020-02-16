@@ -5,5 +5,5 @@ from parsers.aParser import Parser
 
 class FlowFinderParser(Parser):
 
-    def __init__(self, targetDir):
+    def __init__(self, targetDir: str):
         super().__init__(targetDir)

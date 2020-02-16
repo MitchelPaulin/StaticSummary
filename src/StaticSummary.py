@@ -3,7 +3,7 @@ from parsers.cppCheck import CppCheckParser
 from parsers.clang import ClangParser
 from parsers.flowFinder import FlowFinderParser
 
-SUPPORTED_TOOLS = ['clang', 'cppcheck', 'flawfinder']
+SUPPORTED_TOOLS = set(['clang', 'cppcheck', 'flawfinder'])
 
 
 def main():
@@ -21,13 +21,25 @@ def main():
     if args.output:
         outFileName = args.output
 
-    tools = []
+    tools = set()
     for tool in args.tools:
         if tool not in SUPPORTED_TOOLS:
             print('Unsupported tool %s, use one of %s'
                   % (tool, str(SUPPORTED_TOOLS)))
             exit()
-        tools.append(tool)
+        tools.add(tool)
+    results = parse(tools, args.target)
+
+
+def parse(tools, target: str):
+    errors = []
+    for tool in tools:
+        if tool == 'cppcheck':
+            parser = CppCheckParser(target)
+            errors.append(parser.parse())
+    for report in errors:
+        for error in report:
+            print(str(error))
 
 
 if __name__ == "__main__":
