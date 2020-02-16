@@ -40,6 +40,9 @@ def parse(tools, target: str):
         elif tool == 'flawfinder':
             parser = FlawFinderParser(target)
             errors.append(parser.parse())
+        elif tool == 'clang':
+            parser = ClangParser(target)
+            errors.append(parser.parse())
     for report in errors:
         for error in report:
             print(str(error))
