@@ -32,11 +32,13 @@ class HtmlGenerator():
         with doc.body:
             for fileName in errors:
                 print(fileName)
+                title = "{} ({} errors)".format(fileName,
+                                                str(len(errors[fileName])))
                 tempList = ul()
                 for info in errors[fileName]:
                     tempList += li("{}: {} ({})".format(
                                    info[0], info[1], info[2]))
-                detail = details(summary(fileName), tempList)
+                detail = details(summary(title), tempList)
                 doc += detail
 
         return str(doc)
