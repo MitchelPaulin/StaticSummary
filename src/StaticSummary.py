@@ -1,7 +1,7 @@
 import argparse
 from parsers.cppCheck import CppCheckParser
 from parsers.clang import ClangParser
-from parsers.flowFinder import FlowFinderParser
+from parsers.flawFinder import FlawFinderParser
 
 SUPPORTED_TOOLS = set(['clang', 'cppcheck', 'flawfinder'])
 
@@ -36,6 +36,9 @@ def parse(tools, target: str):
     for tool in tools:
         if tool == 'cppcheck':
             parser = CppCheckParser(target)
+            errors.append(parser.parse())
+        elif tool == 'flawfinder':
+            parser = FlawFinderParser(target)
             errors.append(parser.parse())
     for report in errors:
         for error in report:

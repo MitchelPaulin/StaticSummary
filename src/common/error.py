@@ -7,7 +7,8 @@ class Error:
     errText = ""
     source = ""
 
-    def __init__(self, lineNumber: int, fileName: str, errText: str, source: str):
+    def __init__(self, lineNumber: int, fileName: str, errText: str,
+                 source: str):
         self.lineNumber = lineNumber
         self.fileName = fileName
         self.errText = errText
