@@ -44,9 +44,8 @@ def parse(tools, target: str, outFileName: str) -> List[Error]:
     """
     Prase the data and return the output as an error list
     """
-    ret = []
+    errors = []
     for tool in tools:
-        errors = []
         if tool == 'cppcheck':
             parser = CppCheckParser(target)
             errors.append(parser.parse())
@@ -57,8 +56,7 @@ def parse(tools, target: str, outFileName: str) -> List[Error]:
             parser = ClangParser(target)
             errors.append(parser.parse())
         # flatten ret before return
-        ret = [e for err in errors for e in err]
-    return ret
+    return [e for err in errors for e in err]
 
 
 def rollupErrors(errorList: List[Error]):
