@@ -2,6 +2,9 @@ import argparse
 from parsers.cppCheck import CppCheckParser
 from parsers.clang import ClangParser
 from parsers.flawFinder import FlawFinderParser
+from common.htmlGenerator import HtmlGenerator
+from common.error import Error
+from typing import List
 
 SUPPORTED_TOOLS = set(['clang', 'cppcheck', 'flawfinder'])
 
@@ -28,12 +31,21 @@ def main():
                   % (tool, str(SUPPORTED_TOOLS)))
             exit()
         tools.add(tool)
-    results = parse(tools, args.target)
+    results = parse(tools, args.target, outFileName)
+    htmlGen = HtmlGenerator(tools)
+    html = htmlGen.generateHtml(results)
+    f = open(outFileName, 'w')
+    f.write(html)
+    f.close()
 
 
-def parse(tools, target: str):
-    errors = []
+def parse(tools, target: str, outFileName: str) -> List[Error]:
+    """
+    Prase the data and return the output as an error list
+    """
+    ret = []
     for tool in tools:
+        errors = []
         if tool == 'cppcheck':
             parser = CppCheckParser(target)
             errors.append(parser.parse())
@@ -43,9 +55,9 @@ def parse(tools, target: str):
         elif tool == 'clang':
             parser = ClangParser(target)
             errors.append(parser.parse())
-    for report in errors:
-        for error in report:
-            print(str(error))
+        # flatten ret before return
+        ret = [e for err in errors for e in err]
+    return ret
 
 
 if __name__ == "__main__":

@@ -131,3 +131,4 @@ dmypy.json
 #custom
 *.json
 out.txt
+*.html
