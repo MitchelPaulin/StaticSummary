@@ -17,7 +17,7 @@ class FlawFinderParser(Parser):
                      self.targetDir], stdout=PIPE, stderr=PIPE)
         errors = result.stdout.decode("utf-8")
 
-        # get relevant relevant information
+        # get relevant information
         ret = []
         pattern = re.compile("(.*):(\d*): *(.*)$")
         for err in errors.split("\n"):

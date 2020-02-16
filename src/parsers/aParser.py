@@ -1,4 +1,4 @@
-"""Parser interface"""
+"""Parser interface, should be implemented by all parsers"""
 
 from abc import ABC, abstractmethod
 from typing import List

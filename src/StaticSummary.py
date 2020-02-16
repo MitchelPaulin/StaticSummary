@@ -11,11 +11,11 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=str,
-                        help='specify the output file name')
+                        help='Specify the output file name')
     parser.add_argument('--target', type=str, required=True,
-                        help="the target directory")
+                        help="The target directory")
     parser.add_argument('--tools', nargs='+', required=True,
-                        help="The static tools you wish to use ex. clang")
+                        help="The static tool(s) you wish to use ex. clang")
     args = parser.parse_args()
 
     if args.output:

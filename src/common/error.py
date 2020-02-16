@@ -1,4 +1,4 @@
-"""A standard defintion for an error return by a static parser"""
+"""A standard defintion for an error returned by a static parser"""
 
 
 class Error:

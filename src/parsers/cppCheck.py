@@ -16,7 +16,7 @@ class CppCheckParser(Parser):
         result = run(['cppcheck', self.targetDir], stdout=PIPE, stderr=PIPE)
         errors = str(result.stderr).split('\\n')
 
-        # get relevant relevant information
+        # get relevant information
         ret = []
         pattern = re.compile(".*\[(.*):(\d*)\]: *(.*)$")
         for err in errors:
