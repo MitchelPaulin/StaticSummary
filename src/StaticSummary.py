@@ -1,4 +1,7 @@
 import argparse
+from parsers.cppCheck import CppCheckParser
+from parsers.clang import ClangParser
+from parsers.flowFinder import FlowFinderParser
 
 SUPPORTED_TOOLS = ['clang', 'cppcheck', 'flawfinder']
 
