@@ -33,6 +33,7 @@ def main():
         tools.add(tool)
     results = parse(tools, args.target, outFileName)
     htmlGen = HtmlGenerator(tools)
+    results = rollupErrors(results)
     html = htmlGen.generateHtml(results)
     f = open(outFileName, 'w')
     f.write(html)
@@ -57,6 +58,19 @@ def parse(tools, target: str, outFileName: str) -> List[Error]:
             errors.append(parser.parse())
         # flatten ret before return
         ret = [e for err in errors for e in err]
+    return ret
+
+
+def rollupErrors(errorList: List[Error]):
+    """
+    Takes a list of errors and groups them by file
+    """
+    ret = {}
+    for err in errorList:
+        if err.fileName not in ret:
+            ret[err.fileName] = [(err.lineNumber, err.errText, err.source)]
+        else:
+            ret[err.fileName].append((err.lineNumber, err.errText, err.source))
     return ret
 
 

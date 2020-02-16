@@ -10,7 +10,7 @@ from common.error import Error
 
 class HtmlGenerator():
 
-    title = "Static code output"
+    title = "Static Code Output"
     tools = ""
     generatedOn = ""
 
@@ -20,11 +20,23 @@ class HtmlGenerator():
             self.title = title
         self.tools = tools
 
-    def generateHtml(self, errors: List[Error]) -> str:
+    def generateHtml(self, errors) -> str:
         doc = dominate.document(self.title)
         with doc.head:
             link(rel='stylesheet', href='common/style.css')
             h1(self.title)
             p("Generated: " + self.generatedOn)
+            p("Tools used: " + str(self.tools))
+            hr()
+
+        with doc.body:
+            for fileName in errors:
+                print(fileName)
+                tempList = ul()
+                for info in errors[fileName]:
+                    tempList += li("{}: {} ({})".format(
+                                   info[0], info[1], info[2]))
+                detail = details(summary(fileName), tempList)
+                doc += detail
 
         return str(doc)
