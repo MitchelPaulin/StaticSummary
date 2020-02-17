@@ -29,9 +29,12 @@ class HtmlGenerator():
             p("Tools used: " + str(self.tools))
             hr()
 
+        # sort the files by number of errors
+        errors = {k: v for k, v in sorted(errors.items(),
+                  key=lambda item: -1 * len(item[1]))}
+
         with doc.body:
             for fileName in errors:
-                print(fileName)
                 title = "{} ({} errors)".format(fileName,
                                                 str(len(errors[fileName])))
                 tempList = ul()
