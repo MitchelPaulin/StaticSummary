@@ -5,6 +5,7 @@ from parsers.flawFinder import FlawFinderParser
 from common.htmlGenerator import HtmlGenerator
 from common.error import Error
 from typing import List
+from pathlib import Path
 import os
 
 SUPPORTED_TOOLS = set(['clang', 'cppcheck', 'flawfinder'])
@@ -40,6 +41,16 @@ def main():
     htmlGen = HtmlGenerator(tools)
     results = rollupErrors(results)
     html = htmlGen.generateHtml(results)
+
+    # Create output file
+    OUT_DIR = '../output'
+
+    try:
+        Path(OUT_DIR).mkdir()
+    except FileExistsError:
+        pass
+
+    outFileName = os.path.join(OUT_DIR, outFileName)
     f = open(outFileName, 'w')
     f.write(html)
     f.close()
