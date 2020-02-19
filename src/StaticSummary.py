@@ -5,6 +5,7 @@ from parsers.flawFinder import FlawFinderParser
 from common.htmlGenerator import HtmlGenerator
 from common.error import Error
 from typing import List
+import os
 
 SUPPORTED_TOOLS = set(['clang', 'cppcheck', 'flawfinder'])
 
@@ -20,6 +21,10 @@ def main():
     parser.add_argument('--tools', nargs='+', required=True,
                         help="The static tool(s) you wish to use ex. clang")
     args = parser.parse_args()
+
+    if not os.path.exists(args.target):
+        print("%s does not exist" % (args.target))
+        exit()
 
     if args.output:
         outFileName = args.output
