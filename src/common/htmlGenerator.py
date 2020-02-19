@@ -7,6 +7,40 @@ from datetime import date
 from typing import List
 from common.error import Error
 
+STYLE = """
+h1 {
+    text-align: center;
+    color: orange;
+}
+
+hr {
+    color: orange;
+}
+
+p {
+    text-align: center;
+    font-weight: bold;
+    color: orange;
+}
+
+summary {
+    text-indent: 15px;
+    color: lightblue; 
+    font-size: larger;
+    padding-bottom: 3px;
+    border-bottom: 1px solid lightblue;
+}
+
+body {
+    background-color: rgb(50, 65, 65);
+    color: white; 
+}
+
+li {
+    padding-bottom: 2px;
+}
+"""
+
 
 class HtmlGenerator():
 
@@ -23,7 +57,7 @@ class HtmlGenerator():
     def generateHtml(self, errors) -> str:
         doc = dominate.document(self.title)
         with doc.head:
-            link(rel='stylesheet', href='common/style.css')
+            style(STYLE)
             h1(self.title)
             p("Generated: " + self.generatedOn)
             p("Tools used: " + str(self.tools))
