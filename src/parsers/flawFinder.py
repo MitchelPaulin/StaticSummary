@@ -1,4 +1,4 @@
-"""A implementation of a parser for the flowfinder utility"""
+"""A implementation of a parser for the flawfinder utility"""
 
 from parsers.aParser import Parser
 from common.error import Error
@@ -12,7 +12,7 @@ class FlawFinderParser(Parser):
         super().__init__(targetDir)
 
     def parse(self):
-        # execute cpp check
+        # execute flaw finder
         result = run(['flawfinder', '--quiet', '--dataonly', '--singleline',
                      self.targetDir], stdout=PIPE, stderr=PIPE)
         errors = result.stdout.decode("utf-8")

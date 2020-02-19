@@ -35,8 +35,9 @@ class HtmlGenerator():
             self.title = title
         self.tools = tools
 
-    def generateHtml(self, errors) -> str:
+    def generateHtml(self, errors: List[Error]) -> str:
         doc = dominate.document(self.title)
+        errors = self._rollupErrors(errors)
         with doc.head:
             style(STYLE)
             h1(self.title)
@@ -46,7 +47,7 @@ class HtmlGenerator():
 
         # sort the files by number of errors
         errors = {k: v for k, v in sorted(errors.items(),
-                  key=lambda item: -1 * len(item[1]))}
+                                          key=lambda item: -1 * len(item[1]))}
 
         with doc.body:
             for fileName in errors:
@@ -60,3 +61,15 @@ class HtmlGenerator():
                 doc += detail
 
         return str(doc)
+
+    def _rollupErrors(self, errorList: List[Error]):
+        """
+        Takes a list of errors and groups them by file
+        """
+        ret = {}
+        for err in errorList:
+            if err.fileName not in ret:
+                ret[err.fileName] = [(err.lineNumber, err.errText, err.source)]
+            else:
+                ret[err.fileName].append((err.lineNumber, err.errText, err.source))
+        return ret
