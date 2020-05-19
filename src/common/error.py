@@ -2,10 +2,6 @@
 
 
 class Error:
-    lineNumber = 0
-    fileName = ""
-    errText = ""
-    source = ""
 
     def __init__(self, lineNumber: int, fileName: str, errText: str,
                  source: str):

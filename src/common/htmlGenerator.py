@@ -26,8 +26,6 @@ li {padding-bottom: 2px;}
 class HtmlGenerator():
 
     title = "Static Code Output"
-    tools = ""
-    generatedOn = ""
 
     def __init__(self, tools: List[str], title=None):
         self.generatedOn = str(date.today())

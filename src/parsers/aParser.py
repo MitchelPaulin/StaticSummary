@@ -6,7 +6,6 @@ from common.error import Error
 
 
 class Parser(ABC):
-    targetDir = ""
 
     def __init__(self, targetDir):
         self.targetDir = targetDir
